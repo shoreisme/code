@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>弹跳小球</title>
+		<link href="img/shuge.jpg" rel="icon">
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box{
+				width: 1000px;
+				height: 500px;
+				border: 1px solid saddlebrown;
+				position: relative;
+				left: 50%;
+				margin-left:-500px;
+			}
+			.qiu{
+				width: 10px;
+				height: 10px;
+				position: absolute;
+				border-radius:50%;
+			}
+			#top1{
+				background-color: seagreen;
+				top: 0px;
+				left: 0px;
+			}
+			#top2{
+				background-color: darkblue;
+				left: 0px;
+				left: 300px;
+			}
+			#top3{
+				background-color: darkorange;
+				top: 0px;
+				left: 600px;
+			}
+			.zhong{
+				position: absolute;
+				text-align: center;
+			}
+			#zhong{
+				background-color: saddlebrown;
+				width: 200px;
+				height: 100px;
+				top: 200px;
+				left: 400px;
+			}
+			#sp{
+				font-size:50px;
+				color: white;
+				line-height: 100px;
+			}
+			#zhong2{
+				background-color: salmon;
+				width: 20px;
+				height: 300px;
+				top: 100px;
+				left: 150px;
+			}
+			#sp2{
+				width: 20px;
+				font-size: 25px;
+				color: white;
+				word-wrap: break-word;
+			}
+			#zhong3{
+				background-color: sandybrown;
+				width: 400px;
+				height: 20px;
+				top: 400px;
+				left: 500px;
+			}
+			#sp3{
+				color: white;
+			}
+			#zhong4{
+				background-color: darkblue;
+				width: 100px;
+				height: 150px;
+				top: 100px;
+				left: 800px;
+			}
+			#sp4{
+				color: white;
+				font-size: 30px;
+				line-height: 150px;
+			}
+			@keyframes mymove {
+				0% {
+					margin-left: 1px;
+					margin-top: -1px;
+				}
+				5% {
+					margin-left: -3px;
+					margin-top: 2px;
+				}
+				10% {
+					margin-left: 3px;
+					margin-top: -2px;
+				}
+				15% {
+					margin-left: -1px;
+					margin-top: 1px;
+				}
+			}
+			@keyframes mymove2 {
+				0% {
+					margin-left: 1px;
+					margin-top: -1px;
+				}
+				5% {
+					margin-left: -3px;
+					margin-top: 2px;
+				}
+				10% {
+					margin-left: 3px;
+					margin-top: -2px;
+				}
+				15% {
+					margin-left: -1px;
+					margin-top: 1px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="zhong" class="zhong"><span id="sp">0</span></div>
+			<div id="zhong2" class="zhong"><span id="sp2">0</span></div>
+			<div id="zhong3" class="zhong"><span id="sp3">0</span></div>
+			<div id="zhong4" class="zhong"><span id="sp4">0</span></div>
+			<div class="qiu" id="top1"></div>
+			<div class="qiu" id="top2"></div>
+			<div class="qiu" id="top3"></div>
+		</div>
+		<div id="shu" style="margin-left: 40%;"></div>
+		<script>
+			var tt = true;
+			//1
+			var zhong = document.getElementById("zhong");			
+			var sp = document.getElementById("sp");
+			var sum = 0;
+			//2
+			var zhong2 = document.getElementById("zhong2");			
+			var sp2 = document.getElementById("sp2");
+			var sum2 = 0;
+			//3
+			var zhong3 = document.getElementById("zhong3");			
+			var sp3 = document.getElementById("sp3");
+			var sum3 = 0;
+			//4
+			var zhong4 = document.getElementById("zhong4");			
+			var sp4 = document.getElementById("sp4");
+			var sum4 = 0;
+			
+			var a = document.getElementById("top1");
+			var fanxian_a_x = 1;
+			var fanxian_a_y = 1;
+			var huitang_a = true;
+			
+			var b = document.getElementById("top2");
+			var fanxian_b_x = 1;
+			var fanxian_b_y = 1;
+			var huitang_b = true;
+			
+			var c = document.getElementById("top3");
+			var fanxian_c_x = 1;
+			var fanxian_c_y = 1;
+			var huitang_c = true;
+			
+			var times = setInterval(function(){
+				a_start();
+				b_start();
+				c_start();
+			},1);
+			function a_start(){
+				a_pop();
+				a.style.left = a.offsetLeft + fanxian_a_x +'px';
+				a.style.top = a.offsetTop + fanxian_a_y + 'px';
+			}
+			
+			function b_start(){
+				a_pop();
+				b.style.left = b.offsetLeft + fanxian_b_x +'px';
+				b.style.top = b.offsetTop + fanxian_b_y + 'px';
+			}
+			
+			function c_start(){
+				a_pop();
+				c.style.left = c.offsetLeft + fanxian_c_x +'px';
+				c.style.top = c.offsetTop + fanxian_c_y + 'px';
+			}
+			
+			function a_pop(){
+				//a
+				if(a.offsetLeft>990||a.offsetLeft<0){
+					fanxian_a_x *= (-1);
+				}
+				if(a.offsetTop>490||a.offsetTop<0){
+					fanxian_a_y *= (-1);
+				}
+				if((a.offsetTop<300&&a.offsetTop>200)&&(a.offsetLeft>400&&a.offsetLeft<600)){
+					if(huitang_a){
+						fanxian_a_x *= (-1);
+						fanxian_a_y *= 1;
+						huitang_a = false;
+					}else{
+						fanxian_a_x *= 1;
+						fanxian_a_y *= (-1);
+						huitang_a = true;
+					}
+					zhong.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong.style.animation = "mymove2 0.5s 1";
+					}
+					sp.innerText = sum++;
+				}
+				if((a.offsetTop<400&&a.offsetTop>100)&&(a.offsetLeft>150&&a.offsetLeft<170)){
+					if(huitang_a){
+						fanxian_a_x *= (-1);
+						fanxian_a_y *= 1;
+						huitang_a = false;
+					}else{
+						fanxian_a_x *= 1;
+						fanxian_a_y *= (-1);
+						huitang_a = true;
+					}
+					zhong2.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong2.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong2.style.animation = "mymove2 0.5s 1";
+					}
+					sp2.innerText = sum2++;
+				}
+				if((a.offsetTop<420&&a.offsetTop>400)&&(a.offsetLeft>500&&a.offsetLeft<900)){
+					if(huitang_a){
+						fanxian_a_x *= (-1);
+						fanxian_a_y *= 1;
+						huitang_a = false;
+					}else{
+						fanxian_a_x *= 1;
+						fanxian_a_y *= (-1);
+						huitang_a = true;
+					}
+					zhong3.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong3.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong3.style.animation = "mymove2 0.5s 1";
+					}
+					sp3.innerText = sum3++;
+				}
+				if((a.offsetTop<250&&a.offsetTop>100)&&(a.offsetLeft>800&&a.offsetLeft<900)){
+					if(huitang_a){
+						fanxian_a_x *= (-1);
+						fanxian_a_y *= 1;
+						huitang_a = false;
+					}else{
+						fanxian_a_x *= 1;
+						fanxian_a_y *= (-1);
+						huitang_a = true;
+					}
+					zhong4.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong4.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong4.style.animation = "mymove2 0.5s 1";
+					}
+					sp4.innerText = sum3++;
+				}
+				//b
+				if(b.offsetLeft>990||b.offsetLeft<0){
+					fanxian_b_x *= (-1);
+				}
+				if(b.offsetTop>490||b.offsetTop<0){
+					fanxian_b_y *= (-1);
+				}
+				if((b.offsetTop<300&&b.offsetTop>200)&&(b.offsetLeft>400&&b.offsetLeft<600)){
+					if(huitang_b){
+						fanxian_b_x *= (-1);
+						fanxian_b_y *= 1;
+						huitang_b = false;
+					}else{
+						fanxian_b_x *= 1;
+						fanxian_b_y *= (-1);
+						huitang_b = true;
+					}
+					zhong.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong.style.animation = "mymove2 0.5s 1";
+					}
+					sp.innerText = sum++;
+				}
+				if((b.offsetTop<400&&b.offsetTop>100)&&(b.offsetLeft>150&&b.offsetLeft<170)){
+					if(huitang_b){
+						fanxian_b_x *= (-1);
+						fanxian_b_y *= 1;
+						huitang_b = false;
+					}else{
+						fanxian_b_x *= 1;
+						fanxian_b_y *= (-1);
+						huitang_b = true;
+					}
+					zhong2.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong2.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong2.style.animation = "mymove2 0.5s 1";
+					}
+					sp2.innerText = sum2++;
+				}
+				if((b.offsetTop<420&&b.offsetTop>400)&&(b.offsetLeft>500&&b.offsetLeft<900)){
+					if(huitang_b){
+						fanxian_b_x *= (-1);
+						fanxian_b_y *= 1;
+						huitang_b = false;
+					}else{
+						fanxian_b_x *= 1;
+						fanxian_b_y *= (-1);
+						huitang_b = true;
+					}
+					zhong3.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong3.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong3.style.animation = "mymove2 0.5s 1";
+					}
+					sp3.innerText = sum3++;
+				}
+				if((b.offsetTop<250&&b.offsetTop>100)&&(b.offsetLeft>800&&b.offsetLeft<900)){
+					if(huitang_b){
+						fanxian_b_x *= (-1);
+						fanxian_b_y *= 1;
+						huitang_b = false;
+					}else{
+						fanxian_b_x *= 1;
+						fanxian_b_y *= (-1);
+						huitang_b = true;
+					}
+					zhong4.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong4.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong4.style.animation = "mymove2 0.5s 1";
+					}
+					sp4.innerText = sum3++;
+				}
+				//c
+				if(c.offsetLeft>990||c.offsetLeft<0){
+					fanxian_c_x *= (-1);
+				}
+				if(c.offsetTop>490||c.offsetTop<0){
+					fanxian_c_y *= (-1);
+				}
+				if((c.offsetTop<300&&c.offsetTop>200)&&(c.offsetLeft>400&&c.offsetLeft<600)){
+					if(huitang_c){
+						fanxian_c_x *= (-1);
+						fanxian_c_y *= 1;
+						huitang_c = false;
+					}else{
+						fanxian_c_x *= 1;
+						fanxian_c_y *= (-1);
+						huitang_c = true;
+					}
+					zhong.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong.style.animation = "mymove2 0.5s 1";
+					}
+					sp.innerText = sum++;
+				}
+				if((c.offsetTop<400&&c.offsetTop>100)&&(c.offsetLeft>150&&c.offsetLeft<170)){
+					if(huitang_c){
+						fanxian_c_x *= (-1);
+						fanxian_c_y *= 1;
+						huitang_c = false;
+					}else{
+						fanxian_c_x *= 1;
+						fanxian_c_y *= (-1);
+						huitang_c = true;
+					}
+					zhong2.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong2.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong2.style.animation = "mymove2 0.5s 1";
+					}
+					sp2.innerText = sum2++;
+				}
+				if((c.offsetTop<420&&c.offsetTop>400)&&(c.offsetLeft>500&&c.offsetLeft<900)){
+					if(huitang_c){
+						fanxian_c_x *= (-1);
+						fanxian_c_y *= 1;
+						huitang_c = false;
+					}else{
+						fanxian_c_x *= 1;
+						fanxian_c_y *= (-1);
+						huitang_c = true;
+					}
+					zhong3.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong3.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong3.style.animation = "mymove2 0.5s 1";
+					}
+					sp3.innerText = sum3++;
+				}
+				if((c.offsetTop<250&&c.offsetTop>100)&&(c.offsetLeft>800&&c.offsetLeft<900)){
+					if(huitang_c){
+						fanxian_c_x *= (-1);
+						fanxian_c_y *= 1;
+						huitang_c = false;
+					}else{
+						fanxian_c_x *= 1;
+						fanxian_c_y *= (-1);
+						huitang_c = true;
+					}
+					zhong4.style.background = "rgb("+ Math.floor(Math.random()*254+1)+","+ Math.floor(Math.random()*254+1) +","+ Math.floor(Math.random()*254+1) +")";
+					if(tt){
+						tt=false;
+						zhong4.style.animation = "mymove 0.5s 1";
+					}else{
+						tt=true;
+						zhong4.style.animation = "mymove2 0.5s 1";
+					}
+					sp4.innerText = sum3++;
+				}
+			}
+			var childs = document.getElementById("box");
+			var chu = document.getElementById("shu");
+			chu.innerText = (Math.floor(childs.offsetWidth)-2) +" * "+(Math.floor(childs.offsetHeight)-2);
+			/*var str = "";
+			var childs = document.getElementById("box").childNodes;
+			for(var i =0;i<childs.length;i++){
+				if(childs[i].nodeName=="width"){
+					str
+				}
+			}*/
+		</script>
+	</body>
+</html>
